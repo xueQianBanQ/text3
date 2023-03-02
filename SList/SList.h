@@ -36,3 +36,7 @@ void SListInsertAfter(SLTNode* pos, SLTDataType x);
 void SListEraseAfter(SLTNode* pos);
 //µ¥Á´±íµÄ´Ý»Ù
 void SListDestory(SLTNode* plist);
+
+
+
+SLTNode* removeElements(SLTNode* head, int val);

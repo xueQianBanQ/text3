@@ -50,17 +50,18 @@ void SLTest3()
 void SLTest4()
 {
 	SLTNode* pList = NULL;
-	SLTPushFront(&pList, 1);
-	SLTPushFront(&pList, 2);
-	SLTPushFront(&pList, 3);
-	SLTPushFront(&pList, 4);
+	SLTPushFront(&pList, 7);
+	SLTPushFront(&pList, 7);
+	SLTPushFront(&pList, 7);
+	SLTPushFront(&pList, 7);
 	SLTPrint(pList);
-	SLTNode* pos = SListFind(&pList, 2);
-	SListInsertAfter( pos, 9);
+	pList = removeElements(pList, 7);
 	SLTPrint(pList);
-	SListEraseAfter(pos);
-	SLTPrint(pList);
-	SListDestory(pList);
+
+
+
+
+
 }
 int main()
 {

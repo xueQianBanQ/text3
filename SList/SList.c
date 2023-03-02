@@ -32,6 +32,7 @@ SLTNode* BuyNode(SLTDataType x)
 //尾插
 void SLTPushBack(SLTNode** pphead, SLTDataType x)
 {
+	assert(pphead);//防止传入的是SList 而不是&SList
 	SLTNode* newnode = BuyNode(x);
 	if (*pphead == NULL)
 	{
@@ -53,6 +54,7 @@ void SLTPushBack(SLTNode** pphead, SLTDataType x)
 //头插
 void SLTPushFront(SLTNode** pphead, SLTDataType x)
 {
+	assert(pphead);//防止传入的是SList 而不是&SList
 	SLTNode* newnode = BuyNode(x);
 	newnode->next = *pphead;
 	*pphead = newnode;
@@ -62,6 +64,7 @@ void SLTPushFront(SLTNode** pphead, SLTDataType x)
 //尾删
 void SLTPopBack(SLTNode** pphead)
 {
+	assert(pphead);//防止传入的是SList 而不是&SList
 	//暴力的
 	assert(*pphead != NULL);
 	//温柔的
@@ -87,6 +90,7 @@ void SLTPopBack(SLTNode** pphead)
 //头删
 void SLTPopFront(SLTNode** pphead)
 {
+	assert(pphead);//防止传入的是SList 而不是&SList
 	//暴力的
 	assert(*pphead != NULL);
 	//温柔的
@@ -99,9 +103,10 @@ void SLTPopFront(SLTNode** pphead)
 }
 
 //单链表查找
-SLTNode* SListFind(SLTNode** phead, SLTDataType x)
+SLTNode* SListFind(SLTNode** pphead, SLTDataType x)
 {
-	SLTNode* cur = *phead;
+	assert(pphead);//防止传入的是SList 而不是&SList
+	SLTNode* cur = *pphead;
 	while (cur != NULL)
 	{
 		if (cur->data == x)
@@ -116,21 +121,30 @@ SLTNode* SListFind(SLTNode** phead, SLTDataType x)
 //在pos之前插入
 void SListInsert(SLTNode** pphead, SLTNode* pos, SLTDataType x)
 {
+	assert(pphead);//防止传入的是SList 而不是&SList
 	assert(*pphead != NULL);
 	assert(pos != NULL);
-	SLTNode* cur = *pphead;
-	while (cur->next != pos)
+	if (*pphead == pos)
 	{
-		cur = cur->next;
+		SLTPushFront(pphead, x);
 	}
-	SLTNode* newnode = BuyNode(x);
-	cur->next = newnode;
-	newnode->next = pos;
+	else
+	{
+		SLTNode* prev = *pphead;
+		while (prev->next != pos)
+		{
+			prev = prev->next;
+		}
+		SLTNode* newnode = BuyNode(x);
+		prev->next = newnode;
+		newnode->next = pos;
+	}
 }
 
 //pos位置删除
 void SListErase(SLTNode** pphead, SLTNode* pos)
 {
+	assert(pphead);//防止传入的是SList 而不是&SList
 	assert(*pphead != NULL);
 	assert(pos != NULL);
 	SLTNode* cur = *pphead;
@@ -175,4 +189,36 @@ void SListDestory(SLTNode* plist)
 		cur = NULL;
 		temp = temp->next;
 	}
+}
+
+SLTNode* removeElements(SLTNode* head, int val) 
+{
+	SLTNode* cur = head;
+	/*while (cur->data == val && cur)
+	{
+		cur = cur->next;
+	}
+	head = cur;*/
+	while (cur)
+	{
+		if (cur->next != NULL && cur->next->data == val)
+		{
+			SLTNode* del = cur->next;
+			cur->next = del->next;
+			free(del);
+			del = NULL;
+		}
+		else
+		{
+			cur = cur->next;
+		}
+	}
+	cur = head;
+	if (head->data == val)
+	{
+		cur = head->next;
+		/*free(head);
+		head = NULL;*/
+	}
+	return cur;
 }
